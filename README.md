@@ -41,6 +41,8 @@
 
 - run "vv"
 
+    - the first time you do this it will need to download the image from docker hub
+
 - now you should be in the container and vim should be running inside tmux
 
 - either create a new file ":e newfile.lisp" or open an existing one ":e oldfile.lisp"
