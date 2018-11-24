@@ -48,6 +48,6 @@
     - vim
     - tmux
     - common lisp
-    - docker
+    - docker (well you just need docker ce installed and your user account needs to be in the docker group)
 
 
