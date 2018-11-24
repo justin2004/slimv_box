@@ -1,11 +1,10 @@
-# notes:
-#       i would create an alias in your .bashrc like this:
-#       alias vv='docker run --rm -it -v `pwd`:/mnt slimv'
-
 FROM debian:stretch
 # maybe slim would work fine?
 
 LABEL maintainer="Justin <justin2004@hotmail.com>"
+
+# TODO could reorder these stanzas in a logical fashion
+#   i left them in the order i developed them in
 
 WORKDIR /root
 
@@ -20,18 +19,26 @@ RUN apt-get install -y python-dev
 RUN apt-get install -y python-all
 RUN apt-get install -y libncurses5-dev
 
-# enable python
+# enable python for vim
 RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
 RUN cd vim/src && make
 
+# now get slimv
 RUN git clone 'https://github.com/kovisoft/slimv.git'
 RUN mkdir .vim && cp -r slimv/* .vim/
+
+# TODO maybe figure out where the /usr/local/share/ prefix is defined in the
+# vim build scripts and where is the syntax.vim file in the vim source?
 RUN ln -s /root/vim/runtime /usr/local/share/vim
+
+
 RUN apt-get install -y tmux
-RUN apt-get install -y procps
 RUN apt-get install -y sbcl
 
-# so we can run tmux
+# just used for troubleshooting
+RUN apt-get install -y procps
+
+# so we can run tmux in the container
 RUN apt-get install -y locales
 RUN sed --in-place -e '/en_US.UTF-8 UTF-8/ s/^#//' /etc/locale.gen
 RUN locale-gen
