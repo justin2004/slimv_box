@@ -7,8 +7,7 @@ WORKDIR /root
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y git
-
+    && apt-get install -y git 
 RUN git clone 'https://github.com/vim/vim.git'
 RUN apt-get install -y make
 RUN apt-get install -y build-essential
@@ -21,15 +20,22 @@ RUN apt-get install -y libncurses5-dev
 RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
 RUN cd vim/src && make
 
-#ADD entry.lisp      /root
+RUN git clone 'https://github.com/kovisoft/slimv.git'
+RUN mkdir .vim && cp -r slimv/* .vim/
+RUN ln -s /root/vim/runtime /usr/local/share/vim
+RUN apt-get install -y tmux
+RUN apt-get install -y procps
+RUN apt-get install -y sbcl
 
-# TODO pgp verification
-#RUN wget 'https://beta.quicklisp.org/quicklisp.lisp'
-#RUN touch .sbclrc
-#RUN sbcl --load quicklisp.lisp --load install_it.lisp --eval '(quit)'
+# so we can run tmux
+RUN apt-get install -y locales
+RUN sed --in-place -e '/en_US.UTF-8 UTF-8/ s/^#//' /etc/locale.gen
+RUN locale-gen
+
+ADD .vimrc /root
 
 
 
 #STOPSIGNAL SIGTERM
 
-CMD ["./entry.lisp", "--help"]
+CMD ["bash", "-c", "tmux"]
