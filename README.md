@@ -43,5 +43,11 @@
 
 - only files in the /mnt directory are saved when you leave vim!
 
+- you'll need to know how to use:
+
+    - vim
+    - tmux
+    - common lisp
+    - docker
 
 
