@@ -1,3 +1,7 @@
+# notes:
+#       i would create an alias in your .bashrc like this:
+#       alias vv='docker run --rm -it -v `pwd`:/mnt slimv'
+
 FROM debian:stretch
 # maybe slim would work fine?
 
@@ -34,8 +38,21 @@ RUN locale-gen
 
 ADD .vimrc /root
 
+# your pwd in the host should be mounted here
+WORKDIR /mnt
+
+
+# since in the container we are running as root
+# but if you create a new file while in the container you probably want
+# to be able to read/write it once you are outside of the container
+RUN echo 'umask 0000' >> /root/.bashrc
+# TODO this isn't ideal.
+# is there a better way to do this?
+# maybe we can get the uid of the user that runs the container and then inside the
+# continer we can create a user with that uid?
+# https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
 
 
 #STOPSIGNAL SIGTERM
 
-CMD ["bash", "-c", "tmux"]
+CMD ["bash", "-c", "tmux new-session /root/vim/src/vim"]
