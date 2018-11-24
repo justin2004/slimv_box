@@ -29,7 +29,7 @@
 
 >        - alias vv='docker run --rm -it -v `pwd`:/mnt justin2004/slimv_box'
 
-- or if you build the container yourself
+- or if you build the image yourself
 
 >        - alias vv='docker run --rm -it -v `pwd`:/mnt slimv_box'
 
