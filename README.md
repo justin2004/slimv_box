@@ -5,7 +5,7 @@
 
 ### why
 
-- setting up slimv the first time took me a few hours and that could be an impediment to someone using slimv so i wanted to remove the impediment for first time slimv users
+- setting up slimv the first time took me a few hours and that could be an impediment to someone attempting to use slimv so i wanted to remove the impediment for first time slimv users
 
 
 
