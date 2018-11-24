@@ -12,7 +12,18 @@
 ### how 
 
 ##### setup
-- i would create an alias in your .bashrc like this:
+
+- you need to have docker installed
+
+    - it is a pretty easy installation
+    - instructions for ubuntu:
+        - https://docs.docker.com/v17.12/install/linux/docker-ce/ubuntu/
+    - there are also instructions for fedora, debian, centos, etc.
+
+    - you'll probably want to follow the instructions referenced by "Continue to Linux postinstall to allow non-privileged users to run Docker commands and for other optional configuration steps."
+
+
+- then i would create an alias in your .bashrc like this:
 
     - if you want to use the image straight from the docker hub registry:
 
