@@ -41,7 +41,10 @@
 
 ### NOTES
 
-- only files in the /mnt directory are saved when you leave vim!
+- only files in the /mnt directory (in the container) are saved when you leave vim!
+
+- don't run vv from within an existing tmux session or else you'll end up with an embedded tmux session
+
 
 - you'll need to know how to use:
 
@@ -49,5 +52,9 @@
     - tmux
     - common lisp
     - docker (well you just need docker ce installed and your user account needs to be in the docker group)
+
+
+- TODO maybe i should add gvim and/or xterm support so that the slimv menu is visible and clickable and i bet some users would prefer the GUI-ish approach to slimv
+
 
 
