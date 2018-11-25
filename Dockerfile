@@ -28,7 +28,7 @@ RUN git clone 'https://github.com/kovisoft/slimv.git'
 RUN mkdir .vim && cp -r slimv/* .vim/
 
 # TODO maybe figure out where the /usr/local/share/ prefix is defined in the
-# vim build scripts and where is the syntax.vim file in the vim source?
+# vim build scripts
 RUN ln -s /root/vim/runtime /usr/local/share/vim
 
 
