@@ -60,6 +60,17 @@ RUN echo 'umask 0000' >> /root/.bashrc
 # https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
 
 
+# so non-root users can run vim (which lives in /root)
+RUN chmod -R 777 /root
+
 #STOPSIGNAL SIGTERM
 
-CMD ["bash", "-c", "tmux new-session /root/vim/src/vim"]
+# set the HOME variable so vim can set its rtp (runtimepath)
+# as the root user.  we are just using the root user's home
+# because we don't know what user will run the container at
+# image build time
+CMD ["bash", "-c", "declare -x HOME=/root ;  tmux new-session '/root/vim/src/vim'"]
+
+#CMD ["bash", "-c", "tmux new-session '/root/vim/src/vim -u /root/.vimrc'"]
+#CMD ["bash", "-c", "tmux new-session '/root/vim/src/vim'"]
+#CMD ["bash", "-c", "tmux new-session /root/vim/src/vim"]
