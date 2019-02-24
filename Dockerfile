@@ -59,6 +59,8 @@ RUN echo 'umask 0000' >> /root/.bashrc
 # continer we can create a user with that uid?
 # https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
 
+# ^ done!
+
 
 # so non-root users can run vim (which lives in /root)
 RUN chmod -R 777 /root
