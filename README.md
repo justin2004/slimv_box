@@ -49,7 +49,9 @@
 
 - press ,c to start swank
 
-- TODO reference slimv tutorial
+- you can now follow the tutorial:
+
+    - https://kovisoft.bitbucket.io/tutorial.html
 
 
 ### NOTES
