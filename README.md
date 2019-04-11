@@ -1,6 +1,7 @@
 ### what
 
 - slimv (Superior Lisp Interaction Mode for Vim) with sbcl (common lisp interpreter) and tmux (terminal multiplexer) in a Docker container
+    - now with quicklisp (https://www.quicklisp.org/beta/) and an copy of the common lisp hyperspec (for offline use)
 
 
 ### why
@@ -52,6 +53,9 @@
 - you can now follow the tutorial:
 
     - https://kovisoft.bitbucket.io/tutorial.html
+
+- when you are done editing your .lisp files be sure to :w them, press ,Q to quit the sbcl REPL, then :q
+
 
 
 ### NOTES
