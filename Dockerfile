@@ -1,10 +1,12 @@
 FROM debian:stretch
-# maybe slim would work fine?
+# TODO maybe slim or even alpine would work fine?
 
 LABEL maintainer="Justin <justin2004@hotmail.com>"
 
 # TODO could reorder these stanzas in a logical fashion
 #   i left them in the order i developed them in
+
+# TODO use a multistage build to remove the vim src, etc. 
 
 WORKDIR /root
 
@@ -62,10 +64,43 @@ RUN echo 'umask 0000' >> /root/.bashrc
 # ^ done!
 
 
+
+
+# get quicklisp
+WORKDIR /root
+RUN apt-get install -y curl
+RUN curl -O https://beta.quicklisp.org/quicklisp.lisp
+
+ADD install_ql.lisp /root
+
+# TODO gpg verification?
+RUN touch .sbclrc
+RUN sbcl --load quicklisp.lisp --load install_ql.lisp --eval '(quit)'
+
+
+
+
+# so tmux will have mode-keys vi set
+RUN echo 'set -o vi'            >> /root/.bashrc
+RUN echo 'declare -x EDITOR=vi' >> /root/.bashrc
+RUN echo 'declare -x VISUAL=vi' >> /root/.bashrc
+
+# troubleshooting
+RUN apt-get install -y netcat
+
+# for hyperspec
+RUN apt-get install -y w3m
+# for offline hyperspec
+RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
+RUN tar -xaf HyperSpec-7-0.tar.gz
+
 # so non-root users can run vim (which lives in /root)
+# and
+# quicklisp will write to (/root/quicklisp /root/.cache)
+# we don't want to chown -R at container runtime (when we know the uid of the user) though...
 RUN chmod -R 777 /root
 
-#STOPSIGNAL SIGTERM
+WORKDIR /mnt
 
 # set the HOME variable so vim can set its rtp (runtimepath)
 # as the root user.  we are just using the root user's home
