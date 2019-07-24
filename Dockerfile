@@ -12,14 +12,8 @@ WORKDIR /root
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y git 
+    && apt-get install -y git make build-essential libpython-all-dev python-dev python-all libncurses5-dev
 RUN git clone 'https://github.com/vim/vim.git'
-RUN apt-get install -y make
-RUN apt-get install -y build-essential
-RUN apt-get install -y libpython-all-dev
-RUN apt-get install -y python-dev
-RUN apt-get install -y python-all
-RUN apt-get install -y libncurses5-dev
 
 # enable python for vim
 RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
@@ -34,8 +28,7 @@ RUN mkdir .vim && cp -r slimv/* .vim/
 RUN ln -s /root/vim/runtime /usr/local/share/vim
 
 
-RUN apt-get install -y tmux
-RUN apt-get install -y sbcl
+RUN apt-get install -y tmux sbcl
 
 # just used for troubleshooting
 RUN apt-get install -y procps
