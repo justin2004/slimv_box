@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:experimental
 # TODO maybe slim or even alpine would work fine?
 
 LABEL maintainer="Justin <justin2004@hotmail.com>"
