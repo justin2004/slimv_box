@@ -28,7 +28,7 @@ RUN mkdir .vim && cp -r slimv/* .vim/
 RUN ln -s /root/vim/runtime /usr/local/share/vim
 
 
-RUN apt-get install -y tmux sbcl
+RUN apt-get install -y tmux sbcl sbcl-source
 
 # just used for troubleshooting
 RUN apt-get install -y procps
