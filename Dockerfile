@@ -83,6 +83,8 @@ RUN apt-get install -y netcat
 
 # for hyperspec
 RUN apt-get install -y w3m
+# for better readability with a black terminal background
+RUN mkdir /root/.w3m && echo 'anchor_color magenta' > /root/.w3m/config
 # for offline hyperspec
 RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
 RUN tar -xaf HyperSpec-7-0.tar.gz
