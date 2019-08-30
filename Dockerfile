@@ -101,8 +101,7 @@ WORKDIR /mnt
 # as the root user.  we are just using the root user's home
 # because we don't know what user will run the container at
 # image build time
-CMD ["bash", "-c", "declare -x HOME=/root ;  tmux new-session '/root/vim/src/vim'"]
-
-#CMD ["bash", "-c", "tmux new-session '/root/vim/src/vim -u /root/.vimrc'"]
-#CMD ["bash", "-c", "tmux new-session '/root/vim/src/vim'"]
-#CMD ["bash", "-c", "tmux new-session /root/vim/src/vim"]
+#
+# set EDITOR so we have vi tmux mode-keys 
+#
+CMD ["bash", "-c", "declare -x HOME=/root ; declare -x EDITOR=vi ;  tmux new-session '/root/vim/src/vim'"]
