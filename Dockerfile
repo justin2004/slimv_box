@@ -10,6 +10,9 @@ LABEL maintainer="Justin <justin2004@hotmail.com>"
 
 WORKDIR /root
 
+# for CEPL without hardware acceleration
+RUN apt-get install -y libglapi-mesa libgl1-mesa-dev libsdl2-dev libsdl2-2.0-0 xorg-dev x11-apps
+
 RUN set -x \
     && apt-get update \
     && apt-get install -y git make build-essential libpython-all-dev python-dev python-all libncurses5-dev
