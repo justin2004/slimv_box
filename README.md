@@ -29,6 +29,7 @@
     - if you want to use the image straight from the docker hub registry:
 
 >        alias vv='docker run --user=`id -u`:`id -u` --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
+>        alias vvc='docker run -e DISPLAY=$DISPLAY -v ~/.Xauthority:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --user=`id -u`:`id -u` --rm -it --net=host -v `pwd`:/mnt justin2004/slimv_box'
 
 - or if you build the image yourself
 
