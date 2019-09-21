@@ -11,11 +11,11 @@ LABEL maintainer="Justin <justin2004@hotmail.com>"
 WORKDIR /root
 
 # for CEPL without hardware acceleration
-RUN apt-get install -y libglapi-mesa libgl1-mesa-dev libsdl2-dev libsdl2-2.0-0 xorg-dev x11-apps
+RUN apt-get update && apt-get install -y libglapi-mesa libgl1-mesa-dev libsdl2-dev libsdl2-2.0-0 xorg-dev x11-apps
 
 RUN set -x \
     && apt-get update \
-    && apt-get install -y git make build-essential libpython-all-dev python-dev python-all libncurses5-dev
+    && apt-get install -y git make build-essential libpython-all-dev python-dev python-all libncurses5-dev exuberant-ctags tmux sbcl sbcl-source
 RUN git clone 'https://github.com/vim/vim.git'
 
 # enable python for vim
@@ -31,13 +31,11 @@ RUN mkdir .vim && cp -r slimv/* .vim/
 RUN ln -s /root/vim/runtime /usr/local/share/vim
 
 
-RUN apt-get install -y tmux sbcl sbcl-source
-
 # just used for troubleshooting
-RUN apt-get install -y procps
+RUN apt-get update && apt-get install -y procps netcat
 
 # so we can run tmux in the container
-RUN apt-get install -y locales
+RUN apt-get update && apt-get install -y locales
 RUN sed --in-place -e '/en_US.UTF-8 UTF-8/ s/^#//' /etc/locale.gen
 RUN locale-gen
 
@@ -81,8 +79,6 @@ RUN echo 'set -o vi'            >> /root/.bashrc
 RUN echo 'declare -x EDITOR=vi' >> /root/.bashrc
 RUN echo 'declare -x VISUAL=vi' >> /root/.bashrc
 
-# troubleshooting
-RUN apt-get install -y netcat
 
 # for hyperspec
 RUN apt-get install -y w3m
@@ -97,6 +93,7 @@ RUN tar -xaf HyperSpec-7-0.tar.gz
 # quicklisp will write to (/root/quicklisp /root/.cache)
 # we don't want to chown -R at container runtime (when we know the uid of the user) though...
 RUN chmod -R 777 /root
+
 
 WORKDIR /mnt
 
