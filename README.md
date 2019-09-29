@@ -38,9 +38,11 @@
 
 >        alias vv='docker run --user=`id -u`:`id -u` --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
 
+
     - but if you want to output to X11 (for CEPL)
 
 >        alias vvc='docker run -e DISPLAY=$DISPLAY -v ~/.Xauthority:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --user=`id -u`:`id -u` --rm -it --net=host -v `pwd`:/mnt justin2004/slimv_box'
+
 
 
 
