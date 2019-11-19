@@ -1,9 +1,33 @@
+"""""""""""""""""""""""""""
+" for vundle
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+"Plugin 'tpope/vim-dadbod'
+"Plugin 'moll/vim-node'
+"Plugin 'leafgarland/typescript-vim'
+"Plugin 'jpalardy/vim-slime'
+"Plugin 'https://gitlab.com/n9n/vim-apl'
+"Plugin 'https://github.com/skywind3000/asyncrun.vim'
+Plugin 'junegunn/fzf'
+"Plugin 'sotte/presenting.vim'
+"Plugin 'junegunn/goyo.vim'
+call vundle#end()
+filetype plugin indent on
+"""""""""""""""""""""""""""
+
+
 syntax enable
 set background=dark
 set ai
 " TODO tabstop, etc.
 set hlsearch
 set ignorecase
+set wildmenu
+set history=10000 
 
 "let g:slimv_swank_cmd = '! tmux new-window -d -n REPL-SBCL "sbcl --load ~/.vim/slime/start-swank.lisp"' 
 let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-SBCL "sbcl --load /root/.vim/slime/start-swank.lisp" ; fi' 
@@ -19,3 +43,6 @@ let g:slimv_clhs_root="file:///root/HyperSpec/Body/"
 "    quicklisp path later?
 set tags=/tmp/v7bAQym/2,./tags,./TAGS,tags,TAGS,/root/quicklisp/dists/quicklisp/software/tags
 let g:slimv_ctags="cd /root/quicklisp/dists/quicklisp/software ; ctags -R ."
+
+" put the REPL on bottom
+let g:slimv_repl_split=2

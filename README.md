@@ -6,6 +6,11 @@
         - quicklisp (https://www.quicklisp.org/beta/) 
         - a copy of the common lisp hyperspec (for offline use)
         - support for CEPL (https://github.com/cbaggers/cepl) on a system without hardware acceleration
+        - fzf (fuzzy finder)
+            - to find files in your current host directory press `:FZF` 
+            - to find files in quicklisp packages press `:FZF ~` 
+            - then press ctrl-x to bring that selected file into a horizontal split
+        - GNU scientific library 
 
 
 ### why

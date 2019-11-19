@@ -95,6 +95,14 @@ RUN tar -xaf HyperSpec-7-0.tar.gz
 RUN chmod -R 777 /root
 
 
+# GNU scientific library
+RUN apt-get update && apt-get install -y gsl-bin libgsl-dev
+
+# vundle and some vim plugins
+RUN git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim
+RUN /root/vim/src/vim +PluginInstall +qall
+RUN apt-get update && apt-get install -y fzf
+
 WORKDIR /mnt
 
 # set the HOME variable so vim can set its rtp (runtimepath)
