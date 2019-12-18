@@ -15,6 +15,8 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'junegunn/fzf'
 "Plugin 'sotte/presenting.vim'
 "Plugin 'junegunn/goyo.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
@@ -45,4 +47,7 @@ set tags=/tmp/v7bAQym/2,./tags,./TAGS,tags,TAGS,/root/quicklisp/dists/quicklisp/
 let g:slimv_ctags="cd /root/quicklisp/dists/quicklisp/software ; ctags -R ."
 
 " put the REPL on bottom
-let g:slimv_repl_split=2
+"let g:slimv_repl_split=2
+
+" put the REPL on right
+let g:slimv_repl_split=4

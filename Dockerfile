@@ -62,7 +62,7 @@ RUN echo 'umask 0000' >> /root/.bashrc
 
 # get quicklisp
 WORKDIR /root
-RUN apt-get install -y curl
+RUN apt-get update && apt-get install -y curl
 RUN curl -O https://beta.quicklisp.org/quicklisp.lisp
 
 ADD install_ql.lisp /root
@@ -81,7 +81,7 @@ RUN echo 'declare -x VISUAL=vi' >> /root/.bashrc
 
 
 # for hyperspec
-RUN apt-get install -y w3m
+RUN apt-get update && apt-get install -y w3m
 # for better readability with a black terminal background
 RUN mkdir /root/.w3m && echo 'anchor_color magenta' > /root/.w3m/config
 # for offline hyperspec
@@ -102,6 +102,10 @@ RUN apt-get update && apt-get install -y gsl-bin libgsl-dev
 RUN git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim
 RUN /root/vim/src/vim +PluginInstall +qall
 RUN apt-get update && apt-get install -y fzf
+
+RUN apt-get update && apt-get install -y jq gnuplot
+
+RUN apt-get update && apt-get install -y libv4l-dev libv4l-0
 
 WORKDIR /mnt
 
