@@ -51,3 +51,8 @@ let g:slimv_ctags="cd /root/quicklisp/dists/quicklisp/software ; ctags -R ."
 
 " put the REPL on right
 let g:slimv_repl_split=4
+
+
+set laststatus=2
+set statusline=%f\ %y\ %m\ %p%%\ %l\ %c
+hi StatusLine ctermbg=White ctermfg=DarkBlue
