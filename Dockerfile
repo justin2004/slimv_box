@@ -107,7 +107,21 @@ RUN apt-get update && apt-get install -y jq gnuplot
 
 RUN apt-get update && apt-get install -y libv4l-dev libv4l-0
 
-WORKDIR /mnt
+
+####################
+# add abcl
+RUN curl -O 'https://common-lisp.net/project/armedbear/releases/1.6.0/abcl-bin-1.6.0.tar.gz' && \
+    tar -xaf abcl-bin-1.6.0.tar.gz
+
+RUN apt-get install -y openjdk-11-jre
+
+# TODO build from source so we can ,j to definitions
+
+
+
+####################
+
+#WORKDIR /mnt
 
 # set the HOME variable so vim can set its rtp (runtimepath)
 # as the root user.  we are just using the root user's home
