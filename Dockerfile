@@ -2,11 +2,10 @@ FROM debian:experimental
 # TODO maybe slim or even alpine would work fine?
 
 LABEL maintainer="Justin <justin2004@hotmail.com>"
-
 # TODO could reorder these stanzas in a logical fashion
 #   i left them in the order i developed them in
 
-# TODO use a multistage build to remove the vim src, etc. 
+# TODO use a multistage build to remove the vim src, etc.
 
 WORKDIR /root
 
@@ -88,11 +87,6 @@ RUN mkdir /root/.w3m && echo 'anchor_color magenta' > /root/.w3m/config
 RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
 RUN tar -xaf HyperSpec-7-0.tar.gz
 
-# so non-root users can run vim (which lives in /root)
-# and
-# quicklisp will write to (/root/quicklisp /root/.cache)
-# we don't want to chown -R at container runtime (when we know the uid of the user) though...
-RUN chmod -R 777 /root
 
 
 # GNU scientific library
@@ -121,13 +115,23 @@ RUN apt-get install -y openjdk-11-jre
 
 ####################
 
-#WORKDIR /mnt
+# so non-root users can run vim (which lives in /root)
+# and
+# quicklisp will write to (/root/quicklisp /root/.cache)
+# we don't want to chown -R at container runtime (when we know the uid of the user) though...
+RUN chmod -R 777 /root
+
+# abcl needs its user to have a homedir
+# TODO get uid and gid at container runtime and make a group and user at that time
+RUN groupadd -g 1000 sampleuser &&  useradd sampleuser --uid 1000 --gid 1000 --home-dir /home/sampleuser && mkdir /home/sampleuser && chown sampleuser:sampleuser /home/sampleuser
+
+WORKDIR /mnt
 
 # set the HOME variable so vim can set its rtp (runtimepath)
 # as the root user.  we are just using the root user's home
 # because we don't know what user will run the container at
 # image build time
 #
-# set EDITOR so we have vi tmux mode-keys 
+# set EDITOR so we have vi tmux mode-keys
 #
 CMD ["bash", "-c", "declare -x HOME=/root ; declare -x EDITOR=vi ;  tmux new-session '/root/vim/src/vim'"]
