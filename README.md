@@ -1,16 +1,17 @@
 ### what
 
 - an IDE for Common Lisp
-- slimv (Superior Lisp Interaction Mode for Vim) with sbcl (common lisp interpreter) and tmux (terminal multiplexer) in a Docker container
-    - now with:
-        - quicklisp (https://www.quicklisp.org/beta/) 
-        - a copy of the common lisp hyperspec (for offline use)
-        - support for CEPL (https://github.com/cbaggers/cepl) on a system without hardware acceleration
-        - fzf (fuzzy finder)
-            - to find files in your current host directory press `:FZF` 
-            - to find files in quicklisp packages press `:FZF ~` 
-            - then press ctrl-x to bring that selected file into a horizontal split
-        - GNU scientific library 
+- slimv (Superior Lisp Interaction Mode for Vim) and tmux (terminal multiplexer) in a Docker container
+- with sbcl [sbcl](http://www.sbcl.org/) and [abcl](https://common-lisp.net/project/armedbear/)
+    - you choose one at container run time with an environment variable (see below)
+- also including:
+    - quicklisp (https://www.quicklisp.org/beta/) 
+    - a copy of the common lisp hyperspec (for offline use)
+    - support for CEPL (https://github.com/cbaggers/cepl) on a system without hardware acceleration
+    - fzf (fuzzy finder)
+        - to find files in your current host directory press `:FZF` 
+        - to find files in quicklisp packages press `:FZF ~` 
+        - then press ctrl-x to bring that selected file into a horizontal split
 
 
 ### why
@@ -29,19 +30,23 @@
 
 - you need to have docker installed
 
-    - it is a pretty easy installation
-    - instructions for ubuntu:
-        - https://docs.docker.com/v17.12/install/linux/docker-ce/ubuntu/
-    - there are also instructions for fedora, debian, centos, etc.
+    - [install_docker](https://docs.docker.com/install/)
 
     - you'll probably want to follow the instructions referenced by "Continue to Linux postinstall to allow non-privileged users to run Docker commands and for other optional configuration steps."
+
+
+- then you have to build this image yourself
+    - clone this repo and cd into it
+    - `docker build --build-arg=uid=`id -u` --build-arg=gid=`id -g` -t justin2004/slimv_box .`
 
 
 - then i would create an alias in your .bashrc like this 
 
     - mostly
 
->        alias vv='docker run --user=`id -u`:`id -u` --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
+>        alias  vv='docker run --user=`id -u`:`id -u` -e CL_IMPLEMENTATION=sbcl --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
+
+>        alias vva='docker run --user=`id -u`:`id -u` -e CL_IMPLEMENTATION=abcl --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
 
 
     - but if you want to output to X11 (for CEPL)
@@ -53,11 +58,11 @@
 
 ##### use
 
+- assuming you've built the image already 
+
 - cd to the directory where you have some common lisp source files you want to edit
 
 - run "vv" or "vvc"
-
-    - the first time you do this it will need to download the image from docker hub
 
 - now you should be in the container and vim should be running inside tmux
 
