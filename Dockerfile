@@ -1,119 +1,136 @@
-FROM debian:experimental
-# TODO maybe slim or even alpine would work fine?
+#FROM debian:experimental
+# i originally used ^ because i need a newer version of sbcl
+FROM debian:10
 
 LABEL maintainer="Justin <justin2004@hotmail.com>"
 
-# TODO could reorder these stanzas in a logical fashion
-#   i left them in the order i developed them in
-
-# TODO use a multistage build to remove the vim src, etc. 
-
+USER root
 WORKDIR /root
 
-# for CEPL without hardware acceleration
-RUN apt-get update && apt-get install -y libglapi-mesa libgl1-mesa-dev libsdl2-dev libsdl2-2.0-0 xorg-dev x11-apps
+RUN apt-get update \
+        && apt-get install -y \
+        git \
+        curl \
+        openjdk-11-jre \
+        w3m \
+        fzf \
+        make \
+        build-essential \
+        libpython-all-dev \
+        python-dev \
+        python-all \
+        libncurses5-dev \
+        exuberant-ctags \
+        tmux \
+        sbcl \
+        sbcl-source \
+        procps \
+        netcat
 
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y git make build-essential libpython-all-dev python-dev python-all libncurses5-dev exuberant-ctags tmux sbcl sbcl-source
-RUN git clone 'https://github.com/vim/vim.git'
-
-# enable python for vim
-RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
-RUN cd vim/src && make
-
-# now get slimv
-RUN git clone 'https://github.com/kovisoft/slimv.git'
-RUN mkdir .vim && cp -r slimv/* .vim/
-
-# TODO maybe figure out where the /usr/local/share/ prefix is defined in the
-# vim build scripts
-RUN ln -s /root/vim/runtime /usr/local/share/vim
-
-
-# just used for troubleshooting
-RUN apt-get update && apt-get install -y procps netcat
 
 # so we can run tmux in the container
 RUN apt-get update && apt-get install -y locales
 RUN sed --in-place -e '/en_US.UTF-8 UTF-8/ s/^#//' /etc/locale.gen
 RUN locale-gen
 
-ADD .vimrc /root
 
-# your pwd in the host should be mounted here
-WORKDIR /mnt
+#################################
+
+# TODO note the image on dockerhub will only be agreeable if your uid and gid are:
+ARG uid=1000
+ARG gid=1000
+ARG user=containeruser
+
+# abcl needs its user to have a homedir
+RUN groupadd -g $gid $user && \
+useradd $user --uid $uid --gid $gid --home-dir /home/$user && \
+mkdir /home/$user && \
+chown $user:$user /home/$user
+
+USER $user
+WORKDIR /home/$user
+
+RUN git clone --depth 1 'https://github.com/vim/vim.git'
+
+# enable python for vim
+RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
+RUN cd vim/src && make
+
+# now get slimv
+RUN git clone --depth 1 'https://github.com/kovisoft/slimv.git'
+RUN mkdir .vim && cp -r slimv/* .vim/
+
+# TODO maybe figure out where the /usr/local/share/ prefix is defined in the
+# vim build scripts
+#RUN ln -s /root/vim/runtime /usr/local/share/vim
+USER root
+RUN ln -s /home/$user/vim/runtime /usr/local/share/vim
+USER $user
 
 
-# since in the container we are running as root
-# but if you create a new file while in the container you probably want
-# to be able to read/write it once you are outside of the container
-RUN echo 'umask 0000' >> /root/.bashrc
-# TODO this isn't ideal.
-# is there a better way to do this?
-# maybe we can get the uid of the user that runs the container and then inside the
-# continer we can create a user with that uid?
-# https://denibertovic.com/posts/handling-permissions-with-docker-volumes/
+####################
+# add abcl   --  TODO build from source so we can ,j to definitions
+#  sometimes the download fails so i just manually add abcl to this working copy
+#COPY abcl-bin-1.6.0.tar.gz /home/$user/
+#RUN tar -xaf abcl-bin-1.6.0.tar.gz
+RUN curl -O 'https://common-lisp.net/project/armedbear/releases/1.6.0/abcl-bin-1.6.0.tar.gz' && \
+    tar -xaf abcl-bin-1.6.0.tar.gz
 
-# ^ done!
 
+
+####################
+# hyperspec
+# for better readability with a black terminal background
+RUN mkdir /home/$user/.w3m && echo 'anchor_color magenta' > /home/$user/.w3m/config
+# for offline hyperspec
+RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
+RUN tar -xaf HyperSpec-7-0.tar.gz
+
+
+ADD .vimrc /home/$user/
 
 
 
 # get quicklisp
-WORKDIR /root
-RUN apt-get update && apt-get install -y curl
 RUN curl -O https://beta.quicklisp.org/quicklisp.lisp
 
-ADD install_ql.lisp /root
+ADD install_ql.lisp      /home/$user
+ADD install_ql_abcl.lisp /home/$user
 
+# add quicklisp to sbclrc
 # TODO gpg verification?
 RUN touch .sbclrc
 RUN sbcl --load quicklisp.lisp --load install_ql.lisp --eval '(quit)'
+
+# add quicklisp to abclrc
+RUN java -jar abcl-bin-1.6.0/abcl.jar --load install_ql_abcl.lisp --eval '(quit)'
 
 
 
 
 # so tmux will have mode-keys vi set
-RUN echo 'set -o vi'            >> /root/.bashrc
-RUN echo 'declare -x EDITOR=vi' >> /root/.bashrc
-RUN echo 'declare -x VISUAL=vi' >> /root/.bashrc
+RUN echo 'set -o vi'            >> /home/$user/.bashrc
+RUN echo 'declare -x EDITOR=vi' >> /home/$user/.bashrc
+RUN echo 'declare -x VISUAL=vi' >> /home/$user/.bashrc
 
-
-# for hyperspec
-RUN apt-get update && apt-get install -y w3m
-# for better readability with a black terminal background
-RUN mkdir /root/.w3m && echo 'anchor_color magenta' > /root/.w3m/config
-# for offline hyperspec
-RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
-RUN tar -xaf HyperSpec-7-0.tar.gz
-
-# so non-root users can run vim (which lives in /root)
-# and
-# quicklisp will write to (/root/quicklisp /root/.cache)
-# we don't want to chown -R at container runtime (when we know the uid of the user) though...
-RUN chmod -R 777 /root
-
-
-# GNU scientific library
-RUN apt-get update && apt-get install -y gsl-bin libgsl-dev
 
 # vundle and some vim plugins
-RUN git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim
-RUN /root/vim/src/vim +PluginInstall +qall
-RUN apt-get update && apt-get install -y fzf
+RUN git clone --depth 1 https://github.com/VundleVim/Vundle.vim.git /home/$user/.vim/bundle/Vundle.vim
+RUN /home/$user/vim/src/vim +PluginInstall +qall
 
-RUN apt-get update && apt-get install -y jq gnuplot
 
-RUN apt-get update && apt-get install -y libv4l-dev libv4l-0
+# TODO should abcl and sbcl share caches?
+#   quicklisp will write to (/root/quicklisp /root/.cache)
+
+
+# optional packages
+USER root
+COPY extras.sh /home/$user 
+RUN /home/$user/extras.sh
+USER $user
 
 WORKDIR /mnt
 
-# set the HOME variable so vim can set its rtp (runtimepath)
-# as the root user.  we are just using the root user's home
-# because we don't know what user will run the container at
-# image build time
-#
-# set EDITOR so we have vi tmux mode-keys 
-#
-CMD ["bash", "-c", "declare -x HOME=/root ; declare -x EDITOR=vi ;  tmux new-session '/root/vim/src/vim'"]
+# set EDITOR so we have vi tmux mode-keys
+#CMD ["bash", "-c", "declare -x HOME=/root ; declare -x EDITOR=vi ;  tmux new-session '/root/vim/src/vim'"]
+CMD ["bash", "-c", "declare -x EDITOR=vi ;  tmux new-session '$HOME/vim/src/vim'"]
