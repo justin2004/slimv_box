@@ -13,7 +13,7 @@
         - to find files in quicklisp packages press `:FZF ~` 
         - then press ctrl-x to bring that selected file into a horizontal split
 
-[slimv box in action](https://asciinema.org/a/314616)
+[![asciicast](https://asciinema.org/a/314616.svg)](https://asciinema.org/a/314616)
 
 
 ### why
