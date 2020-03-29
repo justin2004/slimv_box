@@ -36,7 +36,7 @@ RUN locale-gen
 
 #################################
 
-# TODO note this in the README
+# TODO note the image on dockerhub will only be agreeable if your uid and gid are:
 ARG uid=1000
 ARG gid=1000
 ARG user=containeruser
