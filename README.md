@@ -37,7 +37,7 @@
 
 - then you have to build this image yourself
     - clone this repo and cd into it
-> `docker build --build-arg=uid=`id -u` --build-arg=gid=`id -g` -t justin2004/slimv_box .`
+>       `docker build --build-arg=uid=`id -u` --build-arg=gid=`id -g` -t justin2004/slimv_box .`
 
 
 - then i would create an alias in your .bashrc like this 
