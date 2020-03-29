@@ -2,7 +2,7 @@
 
 - an IDE for Common Lisp
 - slimv (Superior Lisp Interaction Mode for Vim) and tmux (terminal multiplexer) in a Docker container
-- with sbcl [sbcl](http://www.sbcl.org/) and [abcl](https://common-lisp.net/project/armedbear/)
+- with [sbcl](http://www.sbcl.org/) and [abcl](https://common-lisp.net/project/armedbear/)
     - you choose one at container run time with an environment variable (see below)
 - also including:
     - quicklisp (https://www.quicklisp.org/beta/) 
@@ -37,7 +37,7 @@
 
 - then you have to build this image yourself
     - clone this repo and cd into it
-    - `docker build --build-arg=uid=`id -u` --build-arg=gid=`id -g` -t justin2004/slimv_box .`
+> `docker build --build-arg=uid=`id -u` --build-arg=gid=`id -g` -t justin2004/slimv_box .`
 
 
 - then i would create an alias in your .bashrc like this 
