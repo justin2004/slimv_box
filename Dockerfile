@@ -42,10 +42,10 @@ ARG gid=1000
 ARG user=containeruser
 
 # abcl needs its user to have a homedir
-RUN groupadd -g $gid $user && \
-useradd $user --uid $uid --gid $gid --home-dir /home/$user && \
-mkdir /home/$user && \
-chown $user:$user /home/$user
+RUN groupadd -g $gid $user || true
+RUN useradd $user --uid $uid --gid $gid --home-dir /home/$user && \
+    mkdir /home/$user && \
+    chown $uid:$gid /home/$user
 
 USER $user
 WORKDIR /home/$user
