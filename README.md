@@ -26,10 +26,6 @@
 
 ##### setup
 
-- use a GNU/Linux distro
-    - i use Debian but i bet the Debian derivatives will work too
-        - create an issue if that is not the case for you
-
 - you need to have docker installed
 
     - [install_docker](https://docs.docker.com/install/)
