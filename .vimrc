@@ -17,6 +17,9 @@ Plugin 'junegunn/fzf'
 "Plugin 'junegunn/goyo.vim'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
+Plugin 'preservim/nerdtree'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
