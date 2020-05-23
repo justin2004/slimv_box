@@ -71,3 +71,6 @@ let g:slimv_repl_split=4
 set laststatus=2
 set statusline=%f\ %y\ %m\ %p%%\ %l\ %c
 hi StatusLine ctermbg=White ctermfg=DarkBlue
+
+" TODO set g:slimv_impl='clisp' or do a PR against slimv and add 'abcl'
+"      to allow looking at locals on the stack in the debugger
