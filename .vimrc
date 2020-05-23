@@ -12,6 +12,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
 Plugin 'preservim/nerdtree'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fireplace'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
@@ -39,6 +40,9 @@ if CL == 'abcl'
     let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-ABCL "java -jar $HOME/abcl-bin-1.6.0/abcl.jar --load $HOME/.vim/slime/start-swank.lisp" ; fi'
 elseif CL == 'sbcl'
     let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-SBCL "sbcl --load $HOME/.vim/slime/start-swank.lisp" ; fi'
+elseif CL == 'clojure'
+    "let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-CLJ "java -cp /usr/share/java/clojure-1.10.jar clojure.main" ; fi'
+    let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-CLJ "lein repl :start :port 4005" ; fi'
 endif
 
 " offline hyperspec

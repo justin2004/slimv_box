@@ -87,9 +87,6 @@ RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.
 RUN tar -xaf HyperSpec-7-0.tar.gz
 
 
-ADD .vimrc /home/$user/
-
-
 
 # get quicklisp
 RUN curl -O https://beta.quicklisp.org/quicklisp.lisp
@@ -107,12 +104,16 @@ RUN java -jar abcl-bin-1.6.0/abcl.jar --load install_ql_abcl.lisp --eval '(quit)
 
 
 
-
 # so tmux will have mode-keys vi set
 RUN echo 'set -o vi'            >> /home/$user/.bashrc
 RUN echo 'declare -x EDITOR=vi' >> /home/$user/.bashrc
 RUN echo 'declare -x VISUAL=vi' >> /home/$user/.bashrc
 
+USER root
+RUN apt-get install -y clojure leiningen
+USER $user
+
+ADD .vimrc /home/$user/
 
 # vundle and some vim plugins
 RUN git clone --depth 1 https://github.com/VundleVim/Vundle.vim.git /home/$user/.vim/bundle/Vundle.vim
@@ -124,10 +125,11 @@ RUN /home/$user/vim/src/vim +PluginInstall +qall
 
 
 # optional packages
-USER root
-COPY extras.sh /home/$user 
-RUN /home/$user/extras.sh
-USER $user
+#USER root
+#COPY extras.sh /home/$user 
+#RUN /home/$user/extras.sh
+#USER $user
+
 
 WORKDIR /mnt
 
