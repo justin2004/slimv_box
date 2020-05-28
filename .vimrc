@@ -12,6 +12,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
 Plugin 'preservim/nerdtree'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'guns/vim-sexp'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
@@ -57,6 +58,9 @@ let g:slimv_ctags="cd $HOME/quicklisp/dists/quicklisp/software ; ctags -R ."
 
 " put the REPL on right
 let g:slimv_repl_split=4
+
+" turn off slimv's paredit
+let g:paredit_mode = 0
 
 
 set laststatus=2

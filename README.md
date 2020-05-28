@@ -1,17 +1,19 @@
 ### what
 
 - an IDE for Common Lisp
-- slimv (Superior Lisp Interaction Mode for Vim) and tmux (terminal multiplexer) in a Docker container
+- [slimv](https://github.com/kovisoft/slimv) (Superior Lisp Interaction Mode for Vim) and tmux (terminal multiplexer) in a Docker container
 - with [sbcl](http://www.sbcl.org/) and [abcl](https://common-lisp.net/project/armedbear/)
     - you choose one at container run time with an environment variable (see below)
 - also including:
-    - quicklisp (https://www.quicklisp.org/beta/) 
+    - [quicklisp](https://www.quicklisp.org/beta/) 
     - a copy of the common lisp hyperspec (for offline use)
-    - support for CEPL (https://github.com/cbaggers/cepl) on a system without hardware acceleration
-    - fzf (fuzzy finder)
+    - support for [CEPL](https://github.com/cbaggers/cepl) on a system without hardware acceleration
+    - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
         - to find files in your current host directory press `:FZF` 
         - to find files in quicklisp packages press `:FZF ~` 
         - then press ctrl-x to bring that selected file into a horizontal split
+    - [vim-sexp](https://github.com/guns/vim-sexp)
+        - if you want to disable structral editing you can edit `.vimrc`, comment out `Plugin 'guns/vim-sexp'`, and rebuild the image
 
 [![asciicast](https://asciinema.org/a/314616.svg)](https://asciinema.org/a/314616)
 
