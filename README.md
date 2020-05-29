@@ -13,7 +13,7 @@
         - to find files in quicklisp packages press `:FZF ~` 
         - then press ctrl-x to bring that selected file into a horizontal split
     - [vim-sexp](https://github.com/guns/vim-sexp)
-        - if you want to disable structral editing you can edit `.vimrc`, comment out `Plugin 'guns/vim-sexp'`, and rebuild the image
+        - if you want to disable structural editing you can edit `.vimrc`, comment out `Plugin 'guns/vim-sexp'`, and rebuild the image
 
 [![asciicast](https://asciinema.org/a/314616.svg)](https://asciinema.org/a/314616)
 
