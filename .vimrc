@@ -35,11 +35,20 @@ if CL == ''
 endif
 
 if CL == 'abcl'
+
     " abcl takes some time to start
     let g:slimv_timeout=40
+
+    let g:slimv_impl='clisp'
+    " ^ allows inspection of variables on the stack in the debugger
+    " TODO does it have other, undesireable, effects?
+
     let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-ABCL "java -jar $HOME/abcl-bin-1.6.0/abcl.jar --load $HOME/.vim/slime/start-swank.lisp" ; fi'
+
 elseif CL == 'sbcl'
+
     let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-SBCL "sbcl --load $HOME/.vim/slime/start-swank.lisp" ; fi'
+
 endif
 
 " offline hyperspec
@@ -66,6 +75,3 @@ let g:paredit_mode = 0
 set laststatus=2
 set statusline=%f\ %y\ %m\ %p%%\ %l\ %c
 hi StatusLine ctermbg=White ctermfg=DarkBlue
-
-" TODO set g:slimv_impl='clisp' or do a PR against slimv and add 'abcl'
-"      to allow looking at locals on the stack in the debugger
