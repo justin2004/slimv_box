@@ -13,6 +13,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'preservim/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'guns/vim-sexp'
+Plugin 'jpalardy/vim-slime'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
@@ -75,3 +76,11 @@ let g:paredit_mode = 0
 set laststatus=2
 set statusline=%f\ %y\ %m\ %p%%\ %l\ %c
 hi StatusLine ctermbg=White ctermfg=DarkBlue
+
+
+" vim-slime
+let g:slime_target="tmux"
+let g:slime_default_config = {"socket_name": "default", "target_pane": "{down-of}"}
+"let g:slime_no_mappings=1
+"let g:slime_python_ipython = 1
+

@@ -124,12 +124,17 @@ RUN /home/$user/vim/src/vim +PluginInstall +qall
 
 
 # optional packages
-USER root
-COPY extras.sh /home/$user 
-RUN /home/$user/extras.sh
-USER $user
+#USER root
+#COPY extras.sh /home/$user 
+#RUN /home/$user/extras.sh
+#USER $user
 
 WORKDIR /mnt
+
+# this allows one to use <M-x> key combinations in vim
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
 
 # set EDITOR so we have vi tmux mode-keys
 #CMD ["bash", "-c", "declare -x HOME=/root ; declare -x EDITOR=vi ;  tmux new-session '/root/vim/src/vim'"]
