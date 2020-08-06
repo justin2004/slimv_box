@@ -41,16 +41,18 @@
 
 
 - then i would create an alias in your .bashrc like this 
-
     - for sbcl
 
 >        alias  vv='docker run --user=`id -u`:`id -u` -e CL_IMPLEMENTATION=sbcl --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
 
+
+- then another
     - for abcl
 
 >        alias vva='docker run --user=`id -u`:`id -u` -e CL_IMPLEMENTATION=abcl --net=host --rm -it -v `pwd`:/mnt justin2004/slimv_box'
 
 
+- then perhaps another
     - but if you want to output to X11 (for CEPL)
 
 >        alias vvc='docker run -e DISPLAY=$DISPLAY -v ~/.Xauthority:/home/containeruser/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --user=`id -u`:`id -u` --rm -it --e CL_IMPLEMENTATION=sbcl --net=host -v `pwd`:/mnt justin2004/slimv_box'
