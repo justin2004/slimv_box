@@ -53,7 +53,7 @@
 
 
 - then perhaps another
-    - but if you want to output to X11 (for CEPL)
+    - if you want to output to X11 (for CEPL)
 
 >        alias vvc='docker run -e DISPLAY=$DISPLAY -v ~/.Xauthority:/home/containeruser/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --user=`id -u`:`id -u` --rm -it --e CL_IMPLEMENTATION=sbcl --net=host -v `pwd`:/mnt justin2004/slimv_box'
 
