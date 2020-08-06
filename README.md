@@ -51,7 +51,7 @@
 
     - but if you want to output to X11 (for CEPL)
 
->        alias vvc='docker run -e DISPLAY=$DISPLAY -v ~/.Xauthority:/root/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --user=`id -u`:`id -u` --rm -it --net=host -v `pwd`:/mnt justin2004/slimv_box'
+>        alias vvc='docker run -e DISPLAY=$DISPLAY -v ~/.Xauthority:/home/containeruser/.Xauthority -v /tmp/.X11-unix:/tmp/.X11-unix --user=`id -u`:`id -u` --rm -it --net=host -v `pwd`:/mnt justin2004/slimv_box'
 
 
 
@@ -82,7 +82,7 @@
 
 - if you don't want to wait for the quicklisp downloads each time you start slimv_box then use a docker volume
     - e.g.
->        alias vv='docker run --user=`id -u`:`id -u` --rm -it --net=host -v slimv_box_root:/root -v `pwd`:/mnt justin2004/slimv_box'
+>        alias vv='docker run --user=`id -u`:`id -u` --rm -it --net=host -v slimv_box_userhome:/home/containeruser -v `pwd`:/mnt justin2004/slimv_box'
 
 - only files in the /mnt directory (in the container) are saved when you leave vim!
 
