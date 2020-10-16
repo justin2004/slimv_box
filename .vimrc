@@ -14,6 +14,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'guns/vim-sexp'
 Plugin 'jpalardy/vim-slime'
+Plugin 'https://gitlab.com/n9n/vim-apl'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
@@ -84,3 +85,5 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{down-of
 "let g:slime_no_mappings=1
 "let g:slime_python_ipython = 1
 
+" slimv does not seem to set this?
+au FileType lisp set commentstring=;%s
