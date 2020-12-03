@@ -74,9 +74,7 @@
 
 - press ,c to start swank
 
-- you can now follow the tutorial:
-
-    - https://kovisoft.bitbucket.io/tutorial.html
+- you can now follow the [tutorial](https://kovisoft.github.io/slimv-tutorial/tutorial.html):
 
 - when you are done editing your .lisp files be sure to :w them, press ,Q to quit the sbcl REPL, then :q
 

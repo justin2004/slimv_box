@@ -28,6 +28,7 @@ set incsearch
 set ignorecase
 set wildmenu
 set history=10000
+set belloff=all
 
 let CL = $CL_IMPLEMENTATION
 
