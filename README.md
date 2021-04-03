@@ -7,6 +7,7 @@
 - also including:
     - [quicklisp](https://www.quicklisp.org/beta/) 
     - a copy of the common lisp hyperspec (for offline use)
+        - which opens with [w3m.vim](https://github.com/justin2004/w3m.vim) (a vim plugin for w3m)
     - support for [CEPL](https://github.com/cbaggers/cepl) on a system without hardware acceleration
     - [fzf](https://github.com/junegunn/fzf) (fuzzy finder)
         - to find files in your current host directory press `:FZF` 
