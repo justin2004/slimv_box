@@ -1,4 +1,4 @@
-#FROM debian:experimental
+# FROM debian:experimental
 # i originally used ^ because i need a newer version of sbcl
 FROM debian:10
 
@@ -57,7 +57,10 @@ RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
 RUN cd vim/src && make
 
 # now get slimv
-RUN git clone --depth 1 'https://github.com/kovisoft/slimv.git'
+# RUN git clone --depth 1 'https://github.com/kovisoft/slimv.git'
+RUN git clone 'https://github.com/justin2004/slimv.git'
+# ^ this is just until i get kovisoft to accept my PR
+RUN cd slimv && git checkout browser-cmd-not-shell-command
 RUN mkdir .vim && cp -r slimv/* .vim/
 
 # TODO maybe figure out where the /usr/local/share/ prefix is defined in the
@@ -124,10 +127,12 @@ RUN /home/$user/vim/src/vim +PluginInstall +qall
 
 
 # optional packages
-#USER root
-#COPY extras.sh /home/$user 
-#RUN /home/$user/extras.sh
-#USER $user
+# USER root
+# COPY extras.sh /home/$user 
+# RUN /home/$user/extras.sh
+# RUN apt-get install -y feh
+# USER $user
+
 
 WORKDIR /mnt
 

@@ -14,10 +14,13 @@ Plugin 'preservim/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'guns/vim-sexp'
 Plugin 'jpalardy/vim-slime'
-Plugin 'https://gitlab.com/n9n/vim-apl'
+Plugin 'justin2004/vim-apl'  "my fork of 'https://gitlab.com/n9n/vim-apl' because the upstream disappeared
+Plugin 'justin2004/w3m.vim'  "my fork of 'yuratomo/w3m.vim' because the upsteam doesn't accept PRs
+Plugin 'luochen1990/rainbow'
 call vundle#end()
 filetype plugin indent on
 """""""""""""""""""""""""""
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 
 syntax enable
@@ -29,6 +32,7 @@ set ignorecase
 set wildmenu
 set history=10000
 set belloff=all
+set hidden
 
 let CL = $CL_IMPLEMENTATION
 
@@ -56,6 +60,7 @@ endif
 
 " offline hyperspec
 let g:slimv_clhs_root="file://$HOME/HyperSpec/Body/"
+let g:slimv_browser_cmd_ex=":W3m local"
 
 
 " allow tags to be generated for quicklisp libraries
@@ -88,3 +93,15 @@ let g:slime_default_config = {"socket_name": "default", "target_pane": "{down-of
 
 " slimv does not seem to set this?
 au FileType lisp set commentstring=;%s
+
+
+
+
+" only works if you run the vvc alias (for X11)
+function! LookAtImage(...)
+        let fpath=expand('%')
+        execute('!feh ' . fpath)
+endfunction
+
+au BufEnter *.png,*.jpg,*.jpeg :call LookAtImage()
+
