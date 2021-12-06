@@ -28,7 +28,7 @@ set background=dark
 set ai
 set hlsearch
 set incsearch
-set ignorecase
+set noignorecase
 set wildmenu
 set history=10000
 set belloff=all
