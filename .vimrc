@@ -60,7 +60,7 @@ endif
 
 " offline hyperspec
 let g:slimv_clhs_root="file://$HOME/HyperSpec/Body/"
-" let g:slimv_browser_cmd_ex=":W3m local"
+let g:slimv_browser_cmd_ex=":W3m local"
 
 
 " allow tags to be generated for quicklisp libraries
