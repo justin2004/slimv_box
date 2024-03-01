@@ -26,3 +26,6 @@ libv4l-0
 
 # visidata -- though i'll probably want a newer version
 apt-get install -y visidata
+
+# dbus
+apt-get install -y g++ libfixposix-dev

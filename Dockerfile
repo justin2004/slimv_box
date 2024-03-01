@@ -1,6 +1,6 @@
 # FROM debian:experimental
 # i originally used ^ because i need a newer version of sbcl
-FROM debian:10
+FROM debian:12
 
 LABEL maintainer="Justin <justin2004@hotmail.com>"
 
@@ -11,21 +11,19 @@ RUN apt-get update \
         && apt-get install -y \
         git \
         curl \
-        openjdk-11-jre \
+        openjdk-17-jre \
         w3m \
         fzf \
         make \
         build-essential \
-        libpython-all-dev \
-        python-dev \
-        python-all \
+        python3-dev python3-all libpython3-all-dev \
         libncurses5-dev \
         exuberant-ctags \
         tmux \
         sbcl \
         sbcl-source \
-        procps \
-        netcat
+        procps
+        # netcat
 
 
 # so we can run tmux in the container
@@ -53,14 +51,14 @@ WORKDIR /home/$user
 RUN git clone --depth 1 'https://github.com/vim/vim.git'
 
 # enable python for vim
-RUN sed --in-place -e 's/#CONF_OPT_PYTHON\>/CONF_OPT_PYTHON/' vim/src/Makefile
+RUN sed --in-place -e 's/#CONF_OPT_PYTHON3\>/CONF_OPT_PYTHON3/' vim/src/Makefile
 RUN cd vim/src && make
 
 # now get slimv
-# RUN git clone --depth 1 'https://github.com/kovisoft/slimv.git'
-RUN git clone 'https://github.com/justin2004/slimv.git'
+RUN git clone --depth 1 'https://github.com/kovisoft/slimv.git'
+# RUN git clone 'https://github.com/justin2004/slimv.git'
 # ^ this is just until i get kovisoft to accept my PR
-RUN cd slimv && git checkout browser-cmd-not-shell-command
+# RUN cd slimv && git checkout browser-cmd-not-shell-command
 RUN mkdir .vim && cp -r slimv/* .vim/
 
 # TODO maybe figure out where the /usr/local/share/ prefix is defined in the
@@ -76,8 +74,9 @@ USER $user
 #  sometimes the download fails so i just manually add abcl to this working copy
 #COPY abcl-bin-1.6.0.tar.gz /home/$user/
 #RUN tar -xaf abcl-bin-1.6.0.tar.gz
-RUN curl -O 'https://common-lisp.net/project/armedbear/releases/1.6.0/abcl-bin-1.6.0.tar.gz' && \
-    tar -xaf abcl-bin-1.6.0.tar.gz
+# RUN curl -O 'https://common-lisp.net/project/armedbear/releases/1.6.0/abcl-bin-1.6.0.tar.gz' && \
+RUN curl -O 'https://armedbear.common-lisp.dev/releases/1.9.2/abcl-bin-1.9.2.tar.gz' && \
+    tar -xaf abcl-bin-1.9.2.tar.gz
 
 
 
@@ -86,7 +85,7 @@ RUN curl -O 'https://common-lisp.net/project/armedbear/releases/1.6.0/abcl-bin-1
 # for better readability with a black terminal background
 RUN mkdir /home/$user/.w3m && echo 'anchor_color magenta' > /home/$user/.w3m/config
 # for offline hyperspec
-RUN curl -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
+RUN curl -L -O http://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz
 RUN tar -xaf HyperSpec-7-0.tar.gz
 
 
@@ -106,7 +105,7 @@ RUN touch .sbclrc
 RUN sbcl --load quicklisp.lisp --load install_ql.lisp --eval '(quit)'
 
 # add quicklisp to abclrc
-RUN java -jar abcl-bin-1.6.0/abcl.jar --load install_ql_abcl.lisp --eval '(quit)'
+RUN java -jar abcl-bin-1.9.2/abcl.jar --load install_ql_abcl.lisp --eval '(quit)'
 
 
 

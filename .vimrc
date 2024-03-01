@@ -50,7 +50,7 @@ if CL == 'abcl'
     " ^ allows inspection of variables on the stack in the debugger
     " TODO does it have other, undesireable, effects?
 
-    let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-ABCL "java -jar $HOME/abcl-bin-1.6.0/abcl.jar --load $HOME/.vim/slime/start-swank.lisp" ; fi'
+    let g:slimv_swank_cmd = '! if [ -z "$TMUX" ] ; then echo you need to start tmux first then open vim within tmux ; exit 1 ; else tmux new-window -d -n REPL-ABCL "java -jar $HOME/abcl-bin-1.9.2/abcl.jar --load $HOME/.vim/slime/start-swank.lisp" ; fi'
 
 elseif CL == 'sbcl'
 
@@ -60,7 +60,7 @@ endif
 
 " offline hyperspec
 let g:slimv_clhs_root="file://$HOME/HyperSpec/Body/"
-let g:slimv_browser_cmd_ex=":W3m local"
+" let g:slimv_browser_cmd_ex=":W3m local"
 
 
 " allow tags to be generated for quicklisp libraries
@@ -100,8 +100,8 @@ au FileType lisp set commentstring=;%s
 " only works if you run the vvc alias (for X11)
 function! LookAtImage(...)
         let fpath=expand('%')
-        execute('!feh ' . fpath)
+        execute('!feh --force-aliasing ' . fpath)
 endfunction
 
-au BufEnter *.png,*.jpg,*.jpeg :call LookAtImage()
+au BufEnter *.png,*.jpg,*.jpeg,*.gif :call LookAtImage()
 
